@@ -2,7 +2,12 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 
-mongoose.connect('mongodb+srv://rv:*iamRV97%23@todo.ghypx.mongodb.net/todo?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+try {
+    mongoose.connect('mongodb+srv://rv:*iamRV97%23@todo.ghypx.mongodb.net/todo?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+} catch (err) {
+    next(err);
+}
+
 var todoSchema = new mongoose.Schema({
     username: String,
     item: String
