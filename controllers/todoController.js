@@ -67,8 +67,11 @@ module.exports = (app) => {
 
     app.delete('/todo/:item', async(req, res) => {
         Todo.find({ username: req.session.username, item: req.params.item.replace(/\-/g, " ").trim() }).deleteOne((err, data) => {
-            if (err) throw err;
-            res.json(data);
+            try {
+                res.json(data);
+            } catch (err) {
+                next(err);
+            }
         });
         // data = data.filter((todo) => {
         //     return !req.params.item.includes(todo.item.replace(/ /g, "-"));
