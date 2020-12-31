@@ -28,7 +28,9 @@ module.exports = (app) => {
     app.get('/todo', (req, res) => {
         Todo.find({ username: req.session.username }, (err, data) => {
             if (err) throw err;
+            console.log("VVVV");
             res.render('todo', { todos: data, username: req.session.username });
+            console.log("vvvv LLLL");
         });
         // res.render('todo', { todos: data });
     });
@@ -38,7 +40,6 @@ module.exports = (app) => {
             if (err) console.log(err);;
             res.json(data);
         });
-
         // data.push(req.body);
         // res.json(data);
     });
@@ -47,9 +48,10 @@ module.exports = (app) => {
         req.session.username = req.body.username;
         Todo.find(req.body, (err, data) => {
             if (err) throw err;
+            console.log("XXXX");
             res.render('todo', { todos: data, username: req.session.username });
+            console.log("XXXX KKKK");
         });
-
         // data.push(req.body);
         // res.json(data);
     });
