@@ -5,12 +5,12 @@ var session = require('express-session');
 try {
     mongoose.connect('mongodb+srv://rv:*iamRV97%23@todo.ghypx.mongodb.net/todo?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 } catch (err) {
-    next(err);
+    next(err)
 }
-
 var todoSchema = new mongoose.Schema({
     username: String,
-    item: String
+    item: String,
+    dateTime: String
 });
 
 var Todo = mongoose.model('Todo', todoSchema);
@@ -46,7 +46,7 @@ module.exports = (app) => {
     });
 
     app.post('/todo', urlencodedParser, async(req, res) => {
-        var newTodo = Todo({ username: req.session.username, item: req.body.item }).save((err, data) => {
+        var newTodo = Todo({ username: req.session.username, item: req.body.item, dateTime: req.body.createdTime }).save((err, data) => {
             try {
                 res.json(data);
             } catch (err) {

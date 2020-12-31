@@ -3,9 +3,11 @@ $(document).ready(function() {
     $('form').on('submit', function() {
 
         var item = $('form input');
+        var dt = new Date();
+        var time = dt.toLocaleString();
 
         if (item.val().trim() != "") {
-            var todo = { item: item.val().trim() };
+            var todo = { item: item.val().trim(), createdTime: time };
 
             $.ajax({
                 type: 'POST',
@@ -21,7 +23,7 @@ $(document).ready(function() {
 
     });
 
-    $('li').on('click', function() {
+    $('li p').on('click', function() {
         var item = $(this).text().replace(/ /g, "-");
         $.ajax({
             type: 'DELETE',

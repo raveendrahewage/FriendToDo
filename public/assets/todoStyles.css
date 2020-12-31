@@ -67,14 +67,17 @@ li {
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
-    font-family: arial;
-    font-size: 20px;
     cursor: pointer;
     color: white;
-    letter-spacing: 1px;
 }
 
-li:hover {
+#task {
+    letter-spacing: 1px;
+    font-family: arial;
+    font-size: 25px;
+}
+
+li #task:hover {
     text-decoration: line-through;
     color: rgba(255, 255, 255, 0.637);
     background: rgba(0, 0, 0, 0.2);
@@ -111,4 +114,33 @@ h1 {
 h1 img {
     width: 40px;
     height: auto;
+}
+
+#edit {
+    padding: 5px;
+    width: 20%;
+    background: chocolate;
+    border: 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 2px solid #23282e;
+}
+
+#mainCol::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+#todoCol {
+    float: left;
+    width: 80%;
+}
+
+#editCol {
+    float: left;
+    width: 20%;
 }
