@@ -22,23 +22,31 @@ module.exports = (app) => {
     app.use(session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true }));
 
     app.get('/', (req, res) => {
-        res.render("login");
+        try {
+            res.render("login");
+        } catch (err) {
+            next(err);
+        }
     });
 
     app.get('/todo', (req, res) => {
         Todo.find({ username: req.session.username }, (err, data) => {
-            if (err) throw err;
-            console.log("VVVV");
-            res.render('todo', { todos: data, username: req.session.username });
-            console.log("vvvv LLLL");
+            try {
+                res.render('todo', { todos: data, username: req.session.username });
+            } catch (err) {
+                next(err);
+            }
         });
         // res.render('todo', { todos: data });
     });
 
     app.post('/todo', urlencodedParser, (req, res) => {
         var newTodo = Todo({ username: req.session.username, item: req.body.item }).save((err, data) => {
-            if (err) console.log(err);;
-            res.json(data);
+            try {
+                res.json(data);
+            } catch (err) {
+                next(err);
+            }
         });
         // data.push(req.body);
         // res.json(data);
@@ -47,10 +55,11 @@ module.exports = (app) => {
     app.post('/', urlencodedParser, (req, res) => {
         req.session.username = req.body.username;
         Todo.find(req.body, (err, data) => {
-            if (err) throw err;
-            console.log("XXXX");
-            res.render('todo', { todos: data, username: req.session.username });
-            console.log("XXXX KKKK");
+            try {
+                res.render('todo', { todos: data, username: req.session.username });
+            } catch (err) {
+                next(err);
+            }
         });
         // data.push(req.body);
         // res.json(data);
