@@ -21,7 +21,7 @@ module.exports = (app) => {
 
     app.use(session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true }));
 
-    app.get('/', (req, res) => {
+    app.get('/', async(req, res) => {
         try {
             res.render("login");
         } catch (err) {
@@ -30,7 +30,7 @@ module.exports = (app) => {
     });
 
     app.get('/todo', (req, res) => {
-        Todo.find({ username: req.session.username }, (err, data) => {
+        Todo.find({ username: req.session.username }, async(err, data) => {
             try {
                 res.render('todo', { todos: data, username: req.session.username });
             } catch (err) {
@@ -40,7 +40,7 @@ module.exports = (app) => {
         // res.render('todo', { todos: data });
     });
 
-    app.post('/todo', urlencodedParser, (req, res) => {
+    app.post('/todo', urlencodedParser, async(req, res) => {
         var newTodo = Todo({ username: req.session.username, item: req.body.item }).save((err, data) => {
             try {
                 res.json(data);
@@ -52,7 +52,7 @@ module.exports = (app) => {
         // res.json(data);
     });
 
-    app.post('/', urlencodedParser, (req, res) => {
+    app.post('/', urlencodedParser, async(req, res) => {
         req.session.username = req.body.username;
         Todo.find(req.body, (err, data) => {
             try {
@@ -65,7 +65,7 @@ module.exports = (app) => {
         // res.json(data);
     });
 
-    app.delete('/todo/:item', (req, res) => {
+    app.delete('/todo/:item', async(req, res) => {
         Todo.find({ username: req.session.username, item: req.params.item.replace(/\-/g, " ").trim() }).deleteOne((err, data) => {
             if (err) throw err;
             res.json(data);
